@@ -5,7 +5,7 @@ using UnityEngine;
 public class Click : MonoBehaviour
 {
     public GameObject wall;
-    public Camera cam;
+    
     
     // Start is called before the first frame update
     void Start()

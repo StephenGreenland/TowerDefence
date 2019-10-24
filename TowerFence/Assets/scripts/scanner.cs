@@ -7,24 +7,23 @@ public class scanner : MonoBehaviour
     public Vector2 currentPosition;
     public int height;
     public int width;
-    public GameObject start;
-    public GameObject end;
-    public int invDensity;
-    public GameObject wall;
-    
     
     private int[,] grid;
     private bool[,] vistedBefore;
     private List<Vector2> finalPath;
     private int ballout;
-    private Vector2 startPos;
-    private Vector2 endPos;
+    public Vector2 startPos;
+    public Vector2 endPos;
+    
     private Vector2 lastSpot;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        currentPosition = startPos;
+        
         finalPath = new List<Vector2>();
         vistedBefore = new bool[width, height];
         
@@ -69,7 +68,6 @@ public class scanner : MonoBehaviour
     {
         while (currentPosition != endPos)
         {
-
             currentPosition = MoveTo(CheckVaildSpaces());
             ballout++;
             if (ballout > 100000)
@@ -81,6 +79,7 @@ public class scanner : MonoBehaviour
         if (currentPosition == endPos)
         {
             print("youwin");
+            // pass on list (finalpath) to who ever needs it
         }
     }
     private List<Vector2> CheckVaildSpaces()
@@ -158,7 +157,6 @@ public class scanner : MonoBehaviour
     }
     private void Reset()
     {
-        start.transform.position = new Vector3(startPos.x, 1, startPos.y);
         
         currentPosition = startPos;
         
@@ -171,4 +169,22 @@ public class scanner : MonoBehaviour
         }
         finalPath.Clear();
     }
+
+    public void Scan()
+    {
+        Reset();
+        // Scan the real world starting at 0,0,0 (to be able to place the grid anywhere, add transform.position)
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (Physics.CheckBox(new Vector3(x, 0, y), new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity))
+                {
+                    // Something is there
+                    grid[x, y] = 1;
+                }
+            }
+        }
+    }
+    
 }
