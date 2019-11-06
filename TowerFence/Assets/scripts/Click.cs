@@ -24,7 +24,7 @@ public class Click : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                
+                Debug.Log(hit.point);
                 Instantiate(wall,hit.point, transform.rotation);
 
             }

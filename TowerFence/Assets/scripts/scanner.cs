@@ -7,21 +7,25 @@ public class scanner : MonoBehaviour
     public Vector2 currentPosition;
     public int height;
     public int width;
+    public GameObject wall;
     
     private int[,] grid;
     private bool[,] vistedBefore;
     private List<Vector2> finalPath;
     private int ballout;
+    
     public Vector2 startPos;
     public Vector2 endPos;
     
     private Vector2 lastSpot;
+
+    public LayerMask Notwall;
+    public LayerMask isWall;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
         currentPosition = startPos;
         
         finalPath = new List<Vector2>();
@@ -40,7 +44,14 @@ public class scanner : MonoBehaviour
     private void Update()
     {
         FindPath();
-
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Makewall();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            DestroyWall();
+        }
     }
 
     private void OnDrawGizmos()
@@ -70,7 +81,7 @@ public class scanner : MonoBehaviour
         {
             currentPosition = MoveTo(CheckVaildSpaces());
             ballout++;
-            if (ballout > 100000)
+            if (ballout > 1000)
             {
                 Debug.Log("imaBreak");
                 break;
@@ -157,7 +168,7 @@ public class scanner : MonoBehaviour
     }
     private void Reset()
     {
-        
+        Debug.Log("reset");
         currentPosition = startPos;
         
         for (int i = 0; i < width; i++)
@@ -185,6 +196,36 @@ public class scanner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Makewall()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 1000, Notwall))
+        {
+            grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
+            
+            Instantiate(wall,new Vector3((int) Mathf.Round(hit.point.x),0,(int) Mathf.Round(hit.point.z)), transform.rotation);
+            
+            Reset();
+
+        }
+    }
+
+    public void DestroyWall()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 1000,isWall))
+        {
+            grid[(int) Mathf.Round(hit.collider.transform.position.x),
+                (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
+             Destroy(hit.collider.gameObject);
+            
+             Reset();
+        }
+        
     }
     
 }
