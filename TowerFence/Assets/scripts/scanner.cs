@@ -67,6 +67,8 @@ public class scanner : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
+                Gizmos.color = new Color(0f, 1f, 1f, 0.75f);
+                Gizmos.DrawLine(new Vector3(i,0,j),new Vector3(i,.5f,j) );
                 if (vistedBefore != null && vistedBefore[i, j])
                 {
                     Gizmos.color = new Color(1f, 0f, 0f, 0.25f);
@@ -204,12 +206,15 @@ public class scanner : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 1000, Notwall))
         {
-            grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
-            
-            Instantiate(wall,new Vector3((int) Mathf.Round(hit.point.x),0,(int) Mathf.Round(hit.point.z)), transform.rotation);
-            
-            Reset();
+            if (grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] == 0)
+            {
+                grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
 
+                Instantiate(wall, new Vector3((int) Mathf.Round(hit.point.x), 0, (int) Mathf.Round(hit.point.z)),
+                    transform.rotation);
+
+                Reset();
+            }
         }
     }
 
