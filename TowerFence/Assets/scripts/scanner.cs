@@ -11,7 +11,9 @@ public class scanner : MonoBehaviour
     
     private int[,] grid;
     private bool[,] vistedBefore;
-    private List<Vector2> finalPath;
+    
+    public List<Vector2> finalPath;
+    
     private int ballout;
     
     public Vector2 startPos;
@@ -83,7 +85,7 @@ public class scanner : MonoBehaviour
         {
             currentPosition = MoveTo(CheckVaildSpaces());
             ballout++;
-            if (ballout > 1000)
+            if (ballout > 100000)
             {
                 Debug.Log("imaBreak");
                 break;
@@ -91,7 +93,6 @@ public class scanner : MonoBehaviour
         }
         if (currentPosition == endPos)
         {
-            print("youwin");
             // pass on list (finalpath) to who ever needs it
         }
     }
@@ -159,7 +160,7 @@ public class scanner : MonoBehaviour
 
             vistedBefore[(int) currentPosition.x, (int) currentPosition.y] = true;
             finalPath.Add(new Vector2(currentPosition.x, currentPosition.y));
-            print(whereToMove);
+            
             return whereToMove;
         }
 
@@ -170,7 +171,7 @@ public class scanner : MonoBehaviour
     }
     private void Reset()
     {
-        Debug.Log("reset");
+        
         currentPosition = startPos;
         
         for (int i = 0; i < width; i++)
@@ -231,6 +232,11 @@ public class scanner : MonoBehaviour
              Reset();
         }
         
+    }
+
+    public void MakeTurret()
+    {
+       // Instantiate()
     }
     
 }
