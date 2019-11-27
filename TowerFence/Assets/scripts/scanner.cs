@@ -9,7 +9,7 @@ public class scanner : MonoBehaviour
     public int width;
     public GameObject wall;
     
-    private int[,] grid;
+    public int[,] grid;
     private bool[,] vistedBefore;
     
     public List<Vector2> finalPath;
@@ -46,14 +46,7 @@ public class scanner : MonoBehaviour
     private void Update()
     {
         FindPath();
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Makewall();
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            DestroyWall();
-        }
+
     }
 
     private void OnDrawGizmos()
@@ -169,7 +162,7 @@ public class scanner : MonoBehaviour
         finalPath.RemoveAt(finalPath.Count - 1);
         return whereToMove;
     }
-    private void Reset()
+    public void Reset()
     {
         
         currentPosition = startPos;
@@ -183,60 +176,6 @@ public class scanner : MonoBehaviour
         }
         finalPath.Clear();
     }
-
-    public void Scan()
-    {
-        Reset();
-        // Scan the real world starting at 0,0,0 (to be able to place the grid anywhere, add transform.position)
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (Physics.CheckBox(new Vector3(x, 0, y), new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity))
-                {
-                    // Something is there
-                    grid[x, y] = 1;
-                }
-            }
-        }
-    }
-
-    public void Makewall()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 1000, Notwall))
-        {
-            if (grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] == 0)
-            {
-                grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
-
-                Instantiate(wall, new Vector3((int) Mathf.Round(hit.point.x), 0, (int) Mathf.Round(hit.point.z)),
-                    transform.rotation);
-
-                Reset();
-            }
-        }
-    }
-
-    public void DestroyWall()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 1000,isWall))
-        {
-            grid[(int) Mathf.Round(hit.collider.transform.position.x),
-                (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
-             Destroy(hit.collider.gameObject);
-            
-             Reset();
-        }
-        
-    }
-
-    public void MakeTurret()
-    {
-       // Instantiate()
-    }
+    
     
 }

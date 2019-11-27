@@ -14,7 +14,7 @@ public class scannerbutton : Editor
                         scanner myscript = (scanner) target;
                         if (GUILayout.Button("Scan da world"))
                         {
-                                myscript.Scan();
+                               
                         }
                 }
         }

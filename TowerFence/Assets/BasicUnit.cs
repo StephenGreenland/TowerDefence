@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicUnit : MonoBehaviour
+public class BasicUnit : EnemyBase
 {
     private List<Vector2> path;
     public scanner Grid;

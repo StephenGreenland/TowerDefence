@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
-    public int health;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +15,4 @@ public class Health : MonoBehaviour
     {
         
     }
-
-    void Change(int amount)
-    {
-        health += amount;
-
-
-    }
-    
 }
