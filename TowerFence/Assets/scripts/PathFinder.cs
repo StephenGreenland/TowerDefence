@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class scanner : MonoBehaviour
+public class PathFinder : MonoBehaviour
 {
     public Vector2 currentPosition;
     public int height;
@@ -16,8 +16,7 @@ public class scanner : MonoBehaviour
     
     private int ballout;
     
-    public Vector2 startPos;
-    public Vector2 endPos;
+ 
     
     private Vector2 lastSpot;
 
@@ -28,8 +27,7 @@ public class scanner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentPosition = startPos;
-        
+               
         finalPath = new List<Vector2>();
         vistedBefore = new bool[width, height];
         
@@ -45,11 +43,11 @@ public class scanner : MonoBehaviour
     }
     private void Update()
     {
-        FindPath();
+        
 
     }
 
-    private void OnDrawGizmos()
+  /*  private void OnDrawGizmos()
     {
         if (finalPath != null)
             foreach (Vector2 pathPoint in finalPath)
@@ -72,22 +70,27 @@ public class scanner : MonoBehaviour
             }
         }
     }
-    private void FindPath()
+    */
+    public List<Vector2> FindPath(Vector2 startPos, Vector2 endPos)
     {
+        finalPath.Clear();
+        currentPosition = startPos;
         while (currentPosition != endPos)
         {
-            currentPosition = MoveTo(CheckVaildSpaces());
+            currentPosition = MoveTo(CheckVaildSpaces(),endPos);
             ballout++;
             if (ballout > 100000)
             {
-                Debug.Log("imaBreak");
+                
                 break;
             }
         }
         if (currentPosition == endPos)
         {
-            // pass on list (finalpath) to who ever needs it
+            return finalPath;
         }
+
+        return null;
     }
     private List<Vector2> CheckVaildSpaces()
     {
@@ -132,7 +135,7 @@ public class scanner : MonoBehaviour
         }
         return isVaild;
     }
-    private Vector2 MoveTo(List<Vector2> isVaild)
+    private Vector2 MoveTo(List<Vector2> isVaild, Vector2 endPos)
     {
         Vector2 whereToMove;
         whereToMove = new Vector2(currentPosition.x, currentPosition.y);
@@ -162,20 +165,6 @@ public class scanner : MonoBehaviour
         finalPath.RemoveAt(finalPath.Count - 1);
         return whereToMove;
     }
-    public void Reset()
-    {
-        
-        currentPosition = startPos;
-        
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                vistedBefore[i, j] = false;
-            }
-        }
-        finalPath.Clear();
-    }
-    
+
     
 }

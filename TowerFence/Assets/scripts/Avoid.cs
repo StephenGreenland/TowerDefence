@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class avoid : MonoBehaviour
+public class Avoid : MonoBehaviour
 {
     private Transform t;
     public float distance;
