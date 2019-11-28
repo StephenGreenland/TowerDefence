@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Click : MonoBehaviour
 {
@@ -12,10 +14,12 @@ public class Click : MonoBehaviour
 
     private int selected;
 
-    public scanner scanner;
+    [FormerlySerializedAs("scanner")] public PathFinder pathFinder;
 
     public LayerMask Notwall;
     public LayerMask isWall;
+
+    public event Action OnCrate;
 
     
     
@@ -38,13 +42,14 @@ public class Click : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 1000, Notwall))
             {
-                if (scanner.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] == 0)
+                if (pathFinder.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] == 0)
                 {
-                    scanner.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
+                    pathFinder.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
                     
                     Instantiate(itemSelect[selected], new Vector3((int) Mathf.Round(hit.point.x), 0, (int) Mathf.Round(hit.point.z)),
                         transform.rotation);
-                    scanner.Reset();
+                    //pathFinder.Reset();
+                    OnCrate.Invoke();
                 }
             }
         }
@@ -56,11 +61,11 @@ public class Click : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 1000,isWall))
             {
-                scanner.grid[(int) Mathf.Round(hit.collider.transform.position.x),
+                pathFinder.grid[(int) Mathf.Round(hit.collider.transform.position.x),
                     (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
                 Destroy(hit.collider.gameObject);
             
-                scanner.Reset();
+                
             } 
             
         }

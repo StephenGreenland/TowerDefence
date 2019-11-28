@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class turret : ItemBase
+public class Turret : ItemBase
 {
-    public scanner grid;
+    public PathFinder grid;
     public List<GameObject> targets;
     
     
@@ -17,7 +17,11 @@ public class turret : ItemBase
     // Update is called once per frame
     void Update()
     {
-        if (targets != null && targets.Count > 0 ) transform.LookAt(targets[ChoseEnemy()].transform);
+        if (targets != null && targets.Count > 0)
+        {
+            transform.LookAt(targets[ChoseEnemy()].transform);
+           
+        }
     }
     
     private void OnTriggerEnter(Collider other)
@@ -25,7 +29,7 @@ public class turret : ItemBase
         if (other.GetComponent<EnemyBase>() != null)
         {
             if (targets != null) targets.Add(other.gameObject);
-
+            
         }
     }
 
