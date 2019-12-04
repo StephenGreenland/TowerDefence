@@ -19,7 +19,7 @@ public class Click : MonoBehaviour
     public LayerMask Notwall;
     public LayerMask isWall;
 
-    public event Action OnCrate;
+    public static event Action OnCreateStatic;
 
     
     
@@ -49,7 +49,7 @@ public class Click : MonoBehaviour
                     Instantiate(itemSelect[selected], new Vector3((int) Mathf.Round(hit.point.x), 0, (int) Mathf.Round(hit.point.z)),
                         transform.rotation);
                     //pathFinder.Reset();
-                    OnCrate.Invoke();
+                    OnCreateStatic?.Invoke();
                 }
             }
         }

@@ -13,15 +13,17 @@ public class BasicUnit : EnemyBase
     private float timer;
 
     private Vector2 Endpos;
+
+    private float minDistance;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        Endpos = new Vector2(20,20);
-        ClickManager.OnCrate += NewPath;
+        Endpos = Grid.endPos;
+        Click.OnCreateStatic += NewPath;
         count = 0;
-        path = Grid.FindPath(new Vector2(Mathf.Round(transform.position.x),Mathf.Round( transform.position.z)),Endpos);
+        path = Grid.FindPath(new Vector2(transform.position.x,transform.position.z),Endpos);
         timer = 1;
          
 
@@ -32,17 +34,18 @@ public class BasicUnit : EnemyBase
     {
         
         
-        timer -= Time.deltaTime;
-        
-        
 
-        if (timer < 0 && count < path.Count)
+        if (count < path.Count - 1)
         {
-            timer = .5f;
-            count++;
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0, path[count].y), 1f);
             
+            
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0, path[count].y), Time.deltaTime);
+
+            if (Vector3.Distance(gameObject.transform.position,new Vector3(path[count].x,0,path[count].y)) < .2f)
+            {
                 
+                count++;
+            }
         }
         
 
@@ -57,6 +60,6 @@ public class BasicUnit : EnemyBase
 
     private void OnDestroy()
     {
-        ClickManager.OnCrate -= NewPath;
+        Click.OnCreateStatic -= NewPath;
     }
 }

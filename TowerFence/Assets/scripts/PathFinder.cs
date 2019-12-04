@@ -1,36 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
-    public Vector2 currentPosition;
+   
     public int height;
     public int width;
-    public GameObject wall;
+    
     
     public int[,] grid;
     private bool[,] vistedBefore;
     
-    public List<Vector2> finalPath;
+    private List<Vector2> finalPath;
     
     private int ballout;
-    
- 
-    
-    private Vector2 lastSpot;
 
+    public Vector2 endPos;
+    
     public LayerMask Notwall;
     public LayerMask isWall;
     
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
                
         finalPath = new List<Vector2>();
         vistedBefore = new bool[width, height];
         
+        ClearIsValid();
+
+        grid = new int[width, height];
+    }
+
+    private void ClearIsValid()
+    {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -38,16 +44,15 @@ public class PathFinder : MonoBehaviour
                 vistedBefore[i, j] = false;
             }
         }
-
-        grid = new int[width, height];
     }
+
     private void Update()
     {
         
 
     }
 
-  /*  private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (finalPath != null)
             foreach (Vector2 pathPoint in finalPath)
@@ -69,76 +74,84 @@ public class PathFinder : MonoBehaviour
                 }
             }
         }
-    }
-    */
-    public List<Vector2> FindPath(Vector2 startPos, Vector2 endPos)
+    } 
+    
+    public List<Vector2> FindPath(Vector2 currentPos, Vector2 endPos)
     {
         finalPath.Clear();
-        currentPosition = startPos;
-        while (currentPosition != endPos)
+        ClearIsValid();
+        
+
+        currentPos.x = Mathf.Round(currentPos.x);
+        currentPos.y = Mathf.Round(currentPos.y);
+
+        endPos.x = Mathf.Round(endPos.x);
+        endPos.y = Mathf.Round(endPos.y);
+
+        while (currentPos != endPos)
         {
-            currentPosition = MoveTo(CheckVaildSpaces(),endPos);
+            currentPos = MoveTo(CheckVaildSpaces(currentPos),endPos,currentPos);
             ballout++;
-            if (ballout > 100000)
+            if (ballout > 1000)
             {
                 
                 break;
             }
         }
-        if (currentPosition == endPos)
+        if (currentPos == endPos)
         {
             return finalPath;
         }
 
         return null;
     }
-    private List<Vector2> CheckVaildSpaces()
+    private List<Vector2> CheckVaildSpaces(Vector2 startPos)
     {
         List<Vector2> isVaild;
         isVaild = new List<Vector2>();
 
         // check 4 directions
-        if (currentPosition.x != width - 1)
+        if (startPos.x != width - 1)
         {
-            if (grid[(int) currentPosition.x + 1, (int) currentPosition.y] != 1 &&
-                vistedBefore[(int) currentPosition.x + 1, (int) currentPosition.y] == false)
+            if (grid[(int) startPos.x + 1, (int) startPos.y] != 1 &&
+                vistedBefore[(int) startPos.x + 1, (int) startPos.y] == false)
             {
-                isVaild.Add(new Vector2(currentPosition.x + 1, currentPosition.y));
+                isVaild.Add(new Vector2(startPos.x + 1, startPos.y));
             }
         }
 
-        if (currentPosition.y != height - 1)
+        if (startPos.y != height - 1)
         {
-            if (grid[(int) currentPosition.x, (int) currentPosition.y + 1] != 1 &&
-                vistedBefore[(int) currentPosition.x, (int) currentPosition.y + 1] == false)
+            if (grid[(int) startPos.x, (int) startPos.y + 1] != 1 &&
+                vistedBefore[(int) startPos.x, (int) startPos.y + 1] == false)
             {
-                isVaild.Add(new Vector2(currentPosition.x, currentPosition.y + 1));
+                isVaild.Add(new Vector2(startPos.x, startPos.y + 1));
             }
         }
 
-        if (currentPosition.y != 0)
+        if (startPos.y != 0)
         {
-            if (grid[(int) currentPosition.x, (int) currentPosition.y - 1] != 1 &&
-                vistedBefore[(int) currentPosition.x, (int) currentPosition.y - 1] == false)
+            if (grid[(int) startPos.x, (int) startPos.y - 1] != 1 &&
+                vistedBefore[(int) startPos.x, (int) startPos.y - 1] == false)
             {
-                isVaild.Add(new Vector2(currentPosition.x, currentPosition.y - 1));
+                isVaild.Add(new Vector2(startPos.x, startPos.y - 1));
             }
         }
 
-        if (currentPosition.x != 0)
+        if (startPos.x != 0)
         {
-            if (grid[(int) currentPosition.x - 1, (int) currentPosition.y] != 1 &&
-                vistedBefore[(int) currentPosition.x - 1, (int) currentPosition.y] == false)
+            if (grid[(int) startPos.x - 1, (int) startPos.y] != 1 &&
+                vistedBefore[(int) startPos.x - 1, (int) startPos.y] == false)
             {
-                isVaild.Add(new Vector2(currentPosition.x - 1, currentPosition.y));
+                isVaild.Add(new Vector2(startPos.x - 1, startPos.y));
             }
         }
         return isVaild;
     }
-    private Vector2 MoveTo(List<Vector2> isVaild, Vector2 endPos)
+    private Vector2 MoveTo(List<Vector2> isVaild, Vector2 endPos ,Vector2 startPos)
     {
         Vector2 whereToMove;
-        whereToMove = new Vector2(currentPosition.x, currentPosition.y);
+        whereToMove = new Vector2(startPos.x, startPos.y);
         if (isVaild.Count > 0)
         {
             for (int i = 0; i < isVaild.Count; i++)
@@ -154,15 +167,23 @@ public class PathFinder : MonoBehaviour
                 }
             }
 
-            vistedBefore[(int) currentPosition.x, (int) currentPosition.y] = true;
-            finalPath.Add(new Vector2(currentPosition.x, currentPosition.y));
+            vistedBefore[(int) startPos.x, (int) startPos.y] = true;
+            finalPath.Add(new Vector2(startPos.x, startPos.y));
             
             return whereToMove;
         }
 
-        vistedBefore[(int) currentPosition.x, (int) currentPosition.y] = true;
-        whereToMove = finalPath[finalPath.Count-1];
-        finalPath.RemoveAt(finalPath.Count - 1);
+        vistedBefore[(int) startPos.x, (int) startPos.y] = true;
+
+        if (finalPath.Count>0)
+        {
+            whereToMove = finalPath[finalPath.Count-1];
+            finalPath.RemoveAt(finalPath.Count - 1);
+        }
+        else
+        {
+            Debug.Log("OUT OF BOUNDS... WAAAA?!!");   
+        }
         return whereToMove;
     }
 
