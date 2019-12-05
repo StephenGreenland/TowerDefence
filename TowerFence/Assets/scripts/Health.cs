@@ -15,14 +15,19 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+            
+        }
     }
 
-    void Change(int amount)
+    public void Change(int amount)
     {
         health += amount;
 
 
     }
+    
     
 }

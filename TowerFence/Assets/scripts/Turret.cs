@@ -1,11 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Turret : ItemBase
 {
     public PathFinder grid;
     public List<GameObject> targets;
+    private GameObject target;
+    public int damage;
+
+    private float cooldown;
     
     
     // Start is called before the first frame update
@@ -17,9 +24,28 @@ public class Turret : ItemBase
     // Update is called once per frame
     void Update()
     {
+        cooldown -= Time.deltaTime;
+
+        if (target == null && targets !=null)
+        {
+            target = targets[ChoseEnemy()];
+
+        }
+        
         if (targets != null && targets.Count > 0)
         {
-            transform.LookAt(targets[ChoseEnemy()].transform);
+            
+            transform.LookAt(target.transform);
+
+            if (cooldown < 0)
+            {
+                target.GetComponent<Health>().Change(damage);
+                
+                // DO LIKE A SICK FIRE ANIMATION
+
+                cooldown = 2f;
+
+            }
            
         }
     }
@@ -29,7 +55,20 @@ public class Turret : ItemBase
         if (other.GetComponent<EnemyBase>() != null)
         {
             if (targets != null) targets.Add(other.gameObject);
+
+            target = null;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<EnemyBase>() != null)
+        {
+            if (targets != null) targets.Remove(other.gameObject);
+
             
+
         }
     }
 

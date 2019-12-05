@@ -76,7 +76,7 @@ public class PathFinder : MonoBehaviour
         }
     } 
     
-    public List<Vector2> FindPath(Vector2 currentPos, Vector2 endPos)
+    public Vector2[] FindPath(Vector2 currentPos, Vector2 endPos)
     {
         finalPath.Clear();
         ClearIsValid();
@@ -100,7 +100,7 @@ public class PathFinder : MonoBehaviour
         }
         if (currentPos == endPos)
         {
-            return finalPath;
+            return finalPath.ToArray();
         }
 
         return null;

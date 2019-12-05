@@ -208,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
   targets: []
+  damage: -2
 --- !u!135 &305916953618631690
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -259,21 +260,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8276353004599289161}
     m_Modifications:
-    - target: {fileID: 6918712103634626029, guid: 809d4556d4e571e4abce83c25971f7e8,
-        type: 3}
-      propertyPath: m_Name
-      value: Cylinder (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6918712103634626029, guid: 809d4556d4e571e4abce83c25971f7e8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6918712103634626028, guid: 809d4556d4e571e4abce83c25971f7e8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6918712103634626001, guid: 809d4556d4e571e4abce83c25971f7e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -343,6 +329,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918712103634626029, guid: 809d4556d4e571e4abce83c25971f7e8,
+        type: 3}
+      propertyPath: m_Name
+      value: Cylinder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918712103634626029, guid: 809d4556d4e571e4abce83c25971f7e8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918712103634626028, guid: 809d4556d4e571e4abce83c25971f7e8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 809d4556d4e571e4abce83c25971f7e8, type: 3}

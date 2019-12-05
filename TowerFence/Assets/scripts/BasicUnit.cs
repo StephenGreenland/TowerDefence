@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BasicUnit : EnemyBase
 {
-    public List<Vector2> path;
+    public Vector2[] path;
     public PathFinder Grid;
     public Click ClickManager;
     private int count;
@@ -35,7 +35,7 @@ public class BasicUnit : EnemyBase
         
         
 
-        if (count < path.Count - 1)
+        if (count < path.Length - 1)
         {
             
             
@@ -53,8 +53,12 @@ public class BasicUnit : EnemyBase
     }
 
     private void NewPath()
-    {
+    {    
+        
         path = Grid.FindPath(new Vector2(transform.position.x, transform.position.z),Endpos);
+        
+      
+        
         count = 0;
     }
 
