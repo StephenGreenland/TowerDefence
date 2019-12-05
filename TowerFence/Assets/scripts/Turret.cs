@@ -60,7 +60,6 @@ public class Turret : ItemBase
 
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<EnemyBase>() != null)

@@ -15,7 +15,7 @@ public class PathFinder : MonoBehaviour
     
     private List<Vector2> finalPath;
     
-    private int ballout;
+    private int bailout;
 
     public Vector2 endPos;
     
@@ -37,6 +37,8 @@ public class PathFinder : MonoBehaviour
 
     private void ClearIsValid()
     {
+        bailout = 0;
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -91,8 +93,8 @@ public class PathFinder : MonoBehaviour
         while (currentPos != endPos)
         {
             currentPos = MoveTo(CheckVaildSpaces(currentPos),endPos,currentPos);
-            ballout++;
-            if (ballout > 1000)
+            bailout++;
+            if (bailout > 10000)
             {
                 
                 break;

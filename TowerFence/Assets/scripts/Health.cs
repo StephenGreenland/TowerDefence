@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     public int health;
-    
+
+    public event Action OutOfHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,8 @@ public class Health : MonoBehaviour
     {
         if(health <= 0)
         {
-            Destroy(gameObject);
-            
+            ImDead();
+
         }
     }
 
@@ -27,6 +29,11 @@ public class Health : MonoBehaviour
         health += amount;
 
 
+    }
+
+    void ImDead()
+    {
+        OutOfHealth?.Invoke();
     }
     
     
