@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Castle : MonoBehaviour
 {
     public Health health;
@@ -26,14 +27,14 @@ public class Castle : MonoBehaviour
             health.Change(-1);
             
         }
+        Destroy(other.gameObject);
+
     }
 
     public void Lose()
     {
-        
-        //say you lose
-        // go to main menu
-        Debug.Log("you lose");
+
+        SceneManager.LoadScene("Level1");
 
     }
 

@@ -81,12 +81,16 @@ public class Click : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 1000,isWall))
             {
-                /*if (hit.collider.gameObject.tag == Wall)
+                if (hit.collider.gameObject.tag == "Wall" )
                 {
                     money += 1;
 
                 }
-                */
+                if (hit.collider.gameObject.tag == "Tower")
+                {
+                    money += 3;
+
+                }
                 pathFinder.grid[(int) Mathf.Round(hit.collider.transform.position.x),
                     (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
                 Destroy(hit.collider.gameObject);

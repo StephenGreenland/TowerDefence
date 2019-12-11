@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -41,7 +41,7 @@ public class PathFinder : MonoBehaviour
 
         grid = new int[width, height];
         scan();
-        Instantiate(Castle, new Vector3(endPos.x, 0, endPos.y), Quaternion.identity);
+        Instantiate(Castle, new Vector3(endPos.x-1, 0, endPos.y-1), Quaternion.identity);
 
     }
 

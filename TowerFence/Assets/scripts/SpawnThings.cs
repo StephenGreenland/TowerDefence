@@ -9,12 +9,15 @@ public class SpawnThings : MonoBehaviour
     public PathFinder grid;
     public List<Vector2> spawnPoints;
     public Text uiTimer;
-    
+    public Text endTimer;
+    public Click clickmanager;
     
     public float timer;
     private int waveLevel;
     private int numberOfSpawns;
     private int roundNumber;
+
+    public float timeTillEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -22,19 +25,22 @@ public class SpawnThings : MonoBehaviour
         waveLevel = 0;
         timer = 20f;
         numberOfSpawns = 5;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         timer = timer -= Time.deltaTime;
-
+        timeTillEnd -= Time.deltaTime;
          if(timer < 0)
          {
             spawnWave();
             timer = 20f;
-         }
+            clickmanager.money += 4;
+        }
         uiTimer.text =  ("Time till next wave ") + Mathf.Round(timer).ToString();
+        endTimer.text = ("Time to end of Level ") + Mathf.Round(timeTillEnd).ToString();
     }
 
     void spawnWave()
@@ -56,4 +62,6 @@ public class SpawnThings : MonoBehaviour
         return new Vector3(spawnPoints[i].x, 0, spawnPoints[i].y);
 
     }
+
+
 }
