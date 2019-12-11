@@ -8,6 +8,8 @@ public class PathFinder : MonoBehaviour
    
     public int height;
     public int width;
+    public GameObject Castle;
+    
     
     
     public int[,] grid;
@@ -23,18 +25,24 @@ public class PathFinder : MonoBehaviour
     public LayerMask isWall;
 
     public Vector2 lastPlace;
-    
+
+
+    public float gridExtents = 0.5f;
+    public float startHeight;
 
     // Start is called before the first frame update
     void OnEnable()
     {
-               
+              
         finalPath = new List<Vector2>();
         vistedBefore = new bool[width, height];
         
         ClearIsValid();
 
         grid = new int[width, height];
+        scan();
+        Instantiate(Castle, new Vector3(endPos.x, 0, endPos.y), Quaternion.identity);
+
     }
 
     private void ClearIsValid()
@@ -191,5 +199,22 @@ public class PathFinder : MonoBehaviour
         return whereToMove;
     }
 
+    public void scan()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (Physics.CheckBox(new Vector3(x, startHeight, y), new Vector3(gridExtents, gridExtents, gridExtents), Quaternion.identity))
+                {
+                    // Something is there
+                    grid[x, y] = 1;
+                }
+            }
+        }
+
+
+    }
+    
     
 }

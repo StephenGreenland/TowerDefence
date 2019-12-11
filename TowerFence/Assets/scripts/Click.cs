@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class Click : MonoBehaviour
 {
 
     public GameObject[] itemSelect;
-    
-   
+
+    public Text uiMoney;
 
     private int selected;
 
@@ -22,20 +23,20 @@ public class Click : MonoBehaviour
 
     public int turrentcost;
     public int wallcost;
-    private int money;
+    public int money;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        money = 30;
+        
         selected = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        uiMoney.text = ("Money ")+money.ToString();
         
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
