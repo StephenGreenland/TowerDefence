@@ -9,9 +9,7 @@ public class Click : MonoBehaviour
 {
 
     public GameObject[] itemSelect;
-
     public Text uiMoney;
-
     private int selected;
 
     [FormerlySerializedAs("scanner")] public PathFinder pathFinder;
@@ -20,7 +18,8 @@ public class Click : MonoBehaviour
     public LayerMask isWall;
 
     public static event Action OnCreateStatic;
-
+    
+    
     public int turrentcost;
     public int wallcost;
     public int money;
@@ -82,6 +81,12 @@ public class Click : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 1000,isWall))
             {
+                /*if (hit.collider.gameObject.tag == Wall)
+                {
+                    money += 1;
+
+                }
+                */
                 pathFinder.grid[(int) Mathf.Round(hit.collider.transform.position.x),
                     (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
                 Destroy(hit.collider.gameObject);

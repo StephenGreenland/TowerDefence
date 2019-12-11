@@ -33848,6 +33848,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7824765904204529354, guid: a21f112c32c93e04fb475c1d08876b93,
         type: 3}
+    - target: {fileID: 2308776828112406769, guid: 1d5046f41f80bbc4c81bb8ede1ebe5a8,
+        type: 3}
+      propertyPath: wallcost
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308776828112406769, guid: 1d5046f41f80bbc4c81bb8ede1ebe5a8,
+        type: 3}
+      propertyPath: turrentcost
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d5046f41f80bbc4c81bb8ede1ebe5a8, type: 3}
 --- !u!1001 &2942100504906177348
