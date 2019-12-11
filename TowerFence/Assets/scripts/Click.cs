@@ -9,8 +9,7 @@ public class Click : MonoBehaviour
 
     public GameObject[] itemSelect;
     
-    public GameObject wall;
-    public GameObject turret;
+   
 
     private int selected;
 
@@ -21,13 +20,15 @@ public class Click : MonoBehaviour
 
     public static event Action OnCreateStatic;
 
-    
-    
+    public int turrentcost;
+    public int wallcost;
+    private int money;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        money = 30;
         selected = 0;
     }
 
@@ -44,12 +45,31 @@ public class Click : MonoBehaviour
             {
                 if (pathFinder.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] == 0)
                 {
-                    pathFinder.grid[(int) Mathf.Round(hit.point.x), (int) Mathf.Round(hit.point.z)] = 1;
                     
-                    Instantiate(itemSelect[selected], new Vector3((int) Mathf.Round(hit.point.x), 0, (int) Mathf.Round(hit.point.z)),
+                    
+                    if(selected == 1&& money > turrentcost )
+                    {
+                        Instantiate(itemSelect[selected], new Vector3((int)Mathf.Round(hit.point.x), 0, (int)Mathf.Round(hit.point.z)),
                         transform.rotation);
-                    //pathFinder.Reset();
+
+                        pathFinder.grid[(int)Mathf.Round(hit.point.x), (int)Mathf.Round(hit.point.z)] = 1;
+                        money -= turrentcost;
+                    }
+
+                    if (selected == 0 && money > wallcost)
+                    {
+                        Instantiate(itemSelect[selected], new Vector3((int)Mathf.Round(hit.point.x), 0, (int)Mathf.Round(hit.point.z)),
+                        transform.rotation);
+
+                        pathFinder.grid[(int)Mathf.Round(hit.point.x), (int)Mathf.Round(hit.point.z)] = 1;
+
+                        money -= wallcost;
+                    }
+
+
                     OnCreateStatic?.Invoke();
+
+                    pathFinder.lastPlace = new Vector2(Mathf.Round(hit.point.x), Mathf.Round(hit.point.z));
                 }
             }
         }
@@ -64,8 +84,8 @@ public class Click : MonoBehaviour
                 pathFinder.grid[(int) Mathf.Round(hit.collider.transform.position.x),
                     (int) Mathf.Round(hit.collider.transform.position.z)] = 0;
                 Destroy(hit.collider.gameObject);
-            
-                
+
+                OnCreateStatic?.Invoke();
             } 
             
         }

@@ -8,23 +8,35 @@ public class BasicUnit : EnemyBase
     public Vector2[] path;
     public PathFinder Grid;
     public Click ClickManager;
+    public Health myhealth;
+
+    
+
     private int count;
-
     private float timer;
-
     private Vector2 Endpos;
-
     private float minDistance;
+
+    public event Action<GameObject> OnDeath;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        Endpos = Grid.endPos;
+        ClickManager = GameObject.Find("ClickManager").GetComponent<Click>();
+        Grid = GameObject.Find("Grid").GetComponent<PathFinder>();
+
+        myhealth.OutOfHealth += Die;
         Click.OnCreateStatic += NewPath;
+        
+        Endpos = Grid.endPos;
+        
         count = 0;
-        path = Grid.FindPath(new Vector2(transform.position.x,transform.position.z),Endpos);
         timer = 1;
+
+        Endpos = Grid.endPos;
+        path = Grid.FindPath(new Vector2(transform.position.x,transform.position.z),Endpos);
+        
          
 
     }
@@ -57,13 +69,21 @@ public class BasicUnit : EnemyBase
         
         path = Grid.FindPath(new Vector2(transform.position.x, transform.position.z),Endpos);
         
-      
-        
         count = 0;
     }
 
     private void OnDestroy()
     {
         Click.OnCreateStatic -= NewPath;
+        myhealth.OutOfHealth += Die;
+        OnDeath?.Invoke(gameObject);
+
     }
+    private void Die()
+    {
+        Destroy(gameObject);
+
+    }
+
+
 }

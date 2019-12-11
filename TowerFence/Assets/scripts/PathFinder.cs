@@ -21,6 +21,8 @@ public class PathFinder : MonoBehaviour
     
     public LayerMask Notwall;
     public LayerMask isWall;
+
+    public Vector2 lastPlace;
     
 
     // Start is called before the first frame update
@@ -94,9 +96,9 @@ public class PathFinder : MonoBehaviour
         {
             currentPos = MoveTo(CheckVaildSpaces(currentPos),endPos,currentPos);
             bailout++;
-            if (bailout > 10000)
+            if (bailout > 1000)
             {
-                
+                grid[(int)lastPlace.x,(int) lastPlace.y] = 0;
                 break;
             }
         }

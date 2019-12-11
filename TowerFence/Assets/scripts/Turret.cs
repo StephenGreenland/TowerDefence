@@ -18,6 +18,8 @@ public class Turret : ItemBase
     // Start is called before the first frame update
     void Start()
     {
+
+        grid = GameObject.Find("Grid").GetComponent<PathFinder>();
         
     }
 
@@ -26,13 +28,13 @@ public class Turret : ItemBase
     {
         cooldown -= Time.deltaTime;
 
-        if (target == null && targets !=null)
+        if (target == null && targets.Count != 0)
         {
             target = targets[ChoseEnemy()];
 
         }
         
-        if (targets != null && targets.Count > 0)
+        if (target != null && targets.Count > 0)
         {
             
             transform.LookAt(target.transform);
@@ -56,7 +58,7 @@ public class Turret : ItemBase
         {
             if (targets != null) targets.Add(other.gameObject);
 
-            target = null;
+            other.GetComponent<BasicUnit>().OnDeath += EnemyLeft;
 
         }
     }
@@ -66,13 +68,21 @@ public class Turret : ItemBase
         {
             if (targets != null) targets.Remove(other.gameObject);
 
-            
+            target = null;
 
         }
     }
 
     private int ChoseEnemy()
     {
+      
        return Random.Range(0, (targets.Count-1));
     }
+    void EnemyLeft(GameObject i)
+    {
+        targets.Remove(i);
+        i.gameObject.GetComponent<BasicUnit>().OnDeath -= EnemyLeft;
+
+    }
+
 }
