@@ -11,7 +11,6 @@ public class PathFinder : MonoBehaviour
     public GameObject Castle;
     
     
-    
     public int[,] grid;
     private bool[,] vistedBefore;
     
@@ -21,12 +20,13 @@ public class PathFinder : MonoBehaviour
 
     public Vector2 endPos;
     
+    // click stuff
     public LayerMask Notwall;
     public LayerMask isWall;
 
     public Vector2 lastPlace;
 
-
+    // for scan
     public float gridExtents = 0.5f;
     public float startHeight;
 
@@ -41,8 +41,9 @@ public class PathFinder : MonoBehaviour
 
         grid = new int[width, height];
         scan();
-        Instantiate(Castle, new Vector3(endPos.x-1, 0, endPos.y-1), Quaternion.identity);
-
+       // Instantiate(Castle, new Vector3(endPos.x-1, 0, endPos.y-1), Quaternion.identity);
+        endPos = new Vector2((int)Mathf.Round(Castle.transform.position.x),(int)Mathf.Round(Castle.transform.position.z));
+        grid[(int)endPos.x,(int)endPos.y] = 0;
     }
 
     private void ClearIsValid()
@@ -106,7 +107,7 @@ public class PathFinder : MonoBehaviour
             bailout++;
             if (bailout > 1000)
             {
-                grid[(int)lastPlace.x,(int) lastPlace.y] = 0;
+                
                 break;
             }
         }

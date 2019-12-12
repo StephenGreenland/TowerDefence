@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: -7419298236302122156}
   - component: {fileID: -2165751142799448586}
   m_Layer: 0
-  m_Name: towerRound_sampleF
-  m_TagString: Untagged
+  m_Name: RedC
+  m_TagString: red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,8 +125,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.99999994, y: 1.5199999, z: 0.99999994}
-  m_Center: {x: 0, y: 0.75999993, z: 0}
+  m_Size: {x: 1.1502266, y: 1.5199999, z: 1.1101236}
+  m_Center: {x: -0.0061130524, y: 0.75999993, z: 0.00078344345}
 --- !u!114 &-7419298236302122156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: -2165751142799448586}
+  myColour: 1
 --- !u!114 &-2165751142799448586
 MonoBehaviour:
   m_ObjectHideFlags: 0

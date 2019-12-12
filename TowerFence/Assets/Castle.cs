@@ -6,7 +6,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Castle : MonoBehaviour
 {
+    public GameObject scenelose;
     public Health health;
+    public enum Colour
+    {
+        Purple, Red
+    }
+
+    public Colour myColour;
     
     // Start is called before the first frame update
     void Start()
@@ -33,8 +40,8 @@ public class Castle : MonoBehaviour
 
     public void Lose()
     {
+        scenelose.GetComponent<SceneChanger>().ChangeScene();
 
-        SceneManager.LoadScene("Level1");
 
     }
 

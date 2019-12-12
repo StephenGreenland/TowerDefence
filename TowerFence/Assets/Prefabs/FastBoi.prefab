@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1311769020013668835}
   - component: {fileID: -7046782849590518773}
   m_Layer: 0
-  m_Name: Dummy
+  m_Name: FastBoi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1fae06a8f5709264ebc167363a8d5629, type: 2}
+  - {fileID: 7211448773848044386, guid: e4a9b9f57ac12684494c83cc636e5c00, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,8 @@ MonoBehaviour:
   Grid: {fileID: 0}
   ClickManager: {fileID: 0}
   myhealth: {fileID: 1311769020013668835}
+  speed: 1.5
+  colour: 1
 --- !u!114 &1311769020013668835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8484d7416ff395a42a1768bd206223f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 5
 --- !u!54 &-7046782849590518773
 Rigidbody:
   m_ObjectHideFlags: 0

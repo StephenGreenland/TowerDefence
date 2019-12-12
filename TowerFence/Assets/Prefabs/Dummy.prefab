@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1fae06a8f5709264ebc167363a8d5629, type: 2}
+  - {fileID: -872196626646429207, guid: a532608de417dd649b411079e1356a89, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,6 +113,8 @@ MonoBehaviour:
   Grid: {fileID: 0}
   ClickManager: {fileID: 0}
   myhealth: {fileID: 1311769020013668835}
+  speed: 1
+  colour: 0
 --- !u!114 &1311769020013668835
 MonoBehaviour:
   m_ObjectHideFlags: 0

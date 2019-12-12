@@ -54,6 +54,8 @@ public class Click : MonoBehaviour
 
                         pathFinder.grid[(int)Mathf.Round(hit.point.x), (int)Mathf.Round(hit.point.z)] = 1;
                         money -= turrentcost;
+                        
+                        OnCreateStatic?.Invoke();
                     }
 
                     if (selected == 0 && money > wallcost)
@@ -64,12 +66,14 @@ public class Click : MonoBehaviour
                         pathFinder.grid[(int)Mathf.Round(hit.point.x), (int)Mathf.Round(hit.point.z)] = 1;
 
                         money -= wallcost;
+                        
+                        OnCreateStatic?.Invoke();
                     }
 
 
-                    OnCreateStatic?.Invoke();
+                    
 
-                    pathFinder.lastPlace = new Vector2(Mathf.Round(hit.point.x), Mathf.Round(hit.point.z));
+                    
                 }
             }
         }

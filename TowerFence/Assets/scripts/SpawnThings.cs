@@ -9,7 +9,7 @@ public class SpawnThings : MonoBehaviour
     public PathFinder grid;
     public List<Vector2> spawnPoints;
     public Text uiTimer;
-    public Text endTimer;
+    
     public Click clickmanager;
     
     public float timer;
@@ -17,22 +17,46 @@ public class SpawnThings : MonoBehaviour
     private int numberOfSpawns;
     private int roundNumber;
 
-    public float timeTillEnd;
+    public Vector2[] path;
+    
+    
+    public enum  myEnum
+    {
+        purple,red
+    }
+
+    private GameObject castle;
+    public myEnum colour;
 
     // Start is called before the first frame update
     void Start()
     {
-        waveLevel = 0;
-        timer = 20f;
-        numberOfSpawns = 5;
+        if (colour == myEnum.red)
+        {
+            castle = GameObject.FindWithTag("red");
+            
+        }
+
+        if (colour == myEnum.purple)
+        {
+            castle = GameObject.FindWithTag("purple");
+        }
         
+        waveLevel = 0;
+        numberOfSpawns = 5;
+
+       // path = grid.FindPath(new Vector2((int) Mathf.Round(transform.position.x), (int) Mathf.Round(transform.position.z)),
+                 //   new Vector2((int) Mathf.Round(transform.position.x), (int) Mathf.Round(transform.position.x)));
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        
         timer = timer -= Time.deltaTime;
-        timeTillEnd -= Time.deltaTime;
+        
          if(timer < 0)
          {
             spawnWave();
@@ -40,16 +64,13 @@ public class SpawnThings : MonoBehaviour
             clickmanager.money += 4;
         }
         uiTimer.text =  ("Time till next wave ") + Mathf.Round(timer).ToString();
-        endTimer.text = ("Time to end of Level ") + Mathf.Round(timeTillEnd).ToString();
+        
     }
 
     void spawnWave()
     {
-        for (int i = 0; i < numberOfSpawns+waveLevel; i++)
-        {
-            Instantiate(basicUnit, Vector3.zero, Quaternion.identity);
-            
-        }
+        StartCoroutine(Wait());
+
        
         waveLevel++;
         
@@ -63,5 +84,15 @@ public class SpawnThings : MonoBehaviour
 
     }
 
+    private IEnumerator Wait()
+    {
+        for (int i = 0; i < numberOfSpawns+waveLevel; i++)
+        {
+            yield return  new WaitForSeconds(1);
+            Instantiate(basicUnit, new Vector3(transform.position.x,1, transform.position.z), Quaternion.identity);
+            
+           
+        }
 
+    }
 }
