@@ -64,9 +64,9 @@ public class BasicUnit : EnemyBase
         if (count < path.Length )
         {
             
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0, path[count].y), Time.deltaTime*speed);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0.5f, path[count].y), Time.deltaTime*speed);
 
-            if (Vector3.Distance(gameObject.transform.position,new Vector3(path[count].x,0,path[count].y)) < .1f)
+            if (Vector3.Distance(gameObject.transform.position,new Vector3(path[count].x,0.5f,path[count].y)) < .1f)
             {
                 count++;
             }
