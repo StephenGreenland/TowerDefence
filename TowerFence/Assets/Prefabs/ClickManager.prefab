@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSelect:
-  - {fileID: 2975556973429136075, guid: 31cb4906104f175438accda5467668ef, type: 3}
-  - {fileID: 413913973417812693, guid: eaa38967f19b0a04d80cc51eaf6ba075, type: 3}
+  - {fileID: 4047738866241778473, guid: 2b3f3f0a66b038c4ead7c6d9ad222ecb, type: 3}
+  - {fileID: 7824765904204529354, guid: a21f112c32c93e04fb475c1d08876b93, type: 3}
   uiMoney: {fileID: 0}
   pathFinder: {fileID: 0}
   Notwall:

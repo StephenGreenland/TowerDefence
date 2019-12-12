@@ -47,7 +47,7 @@ public class SpawnThings : MonoBehaviour
     {
         for (int i = 0; i < numberOfSpawns+waveLevel; i++)
         {
-            Instantiate(basicUnit, GetSpawnPoint(), Quaternion.identity);
+            Instantiate(basicUnit, Vector3.zero, Quaternion.identity);
             
         }
        

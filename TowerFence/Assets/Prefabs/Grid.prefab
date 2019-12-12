@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   height: 15
   width: 15
+  Castle: {fileID: 0}
   endPos: {x: 15, y: 15}
   Notwall:
     serializedVersion: 2
@@ -53,3 +54,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   lastPlace: {x: 0, y: 0}
+  gridExtents: 0.2
+  startHeight: 0.6

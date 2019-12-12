@@ -9,7 +9,7 @@ public class BasicUnit : EnemyBase
     public PathFinder Grid;
     public Click ClickManager;
     public Health myhealth;
-
+    public float speed;
     
 
     private int count;
@@ -51,7 +51,7 @@ public class BasicUnit : EnemyBase
         {
             
             
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0, path[count].y), Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(path[count].x, 0, path[count].y), Time.deltaTime*speed);
 
             if (Vector3.Distance(gameObject.transform.position,new Vector3(path[count].x,0,path[count].y)) < .2f)
             {
